@@ -1,13 +1,10 @@
  Social
 ========
 
-Consume multiple API's from social networks easily!
-
-Social is designed in such a way to easily incorporate several
-social network API's and access them via a common interface.
+Consume multiple API's from social networks easily all from one interface!
 
   Social Networks Suported
-----------------------------
+============================
 
 	# Facebook
 
