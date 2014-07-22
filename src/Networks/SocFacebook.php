@@ -38,8 +38,8 @@
 	public static $graph_api_ver = 2.0;
 
 	// credentials
-	private static $_appId     = '1437885403094605' ;
-	private static $_appSecret = '844028829a8dd89eb3d2113c4c2f0d0b' ;
+	private static $_appId     = '[YOUR APP ID HERE]' ;
+	private static $_appSecret = '[YOUR APP SECRETE HERE]' ;
 
 	/**
 	 * constructor
