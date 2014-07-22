@@ -1,0 +1,22 @@
+{
+    "name": "Karl-EdwardJean-Mehu/Social",
+    "description": "Facilitate the use of multiple social API's with one simple to use wrapper",
+    "license":"MIT",
+      "authors": [
+        {
+            "name": "Karl-Edward F. P. Jean-Mehu",
+            "email": "karlej99@yahoo.com"
+        }
+    ],
+    "keywords":["social"],
+    "require": {
+        "facebook/php-sdk-v4":"@stable"
+    },
+    "require-dev":{},  
+    "autoload": {
+        "psr-4": {
+            "Social\\": "src/",
+            "Social\\Networks\\": "src/Networks/"
+        }
+    } 
+}
