@@ -32,18 +32,6 @@
 	class Social {
 		// make this a singleton
 		use tSingleton;
-		// private static $instance = null;
-
-		// private function __construct(){}
-
-		// // singleton constructor
-		// public static function init(){
-		// 	if(is_null(self::$instance)){
-		// 		self::$instance = new social();
-		// 	}
-
-		// 	return self::$instance;
-		// }
 
 		/**
 		 * class network
@@ -51,14 +39,17 @@
 		 * creates instance of requested network API 
 		 * @param  string $requestedNetwork name of supported network
 		 * @return object 					instance of requested network
+		 * @throws SocialException If request network is unavailable or invalid
 		 */
-		public function network($requestedNetwork){
+		public function network($requestedNetwork_name){
 
-			if(is_string($requestedNetwork)){
+			if(is_string($requestedNetwork_name)){
 
 				// prepend required prefix and capitalize
 				// class name
-				$requestedNetwork = 'Soc'. strtoupper(substr($requestedNetwork, 0, 1)) . substr($requestedNetwork, 1);
+				$requestedNetwork_name = strtoupper(substr($requestedNetwork_name, 0, 1)) . substr($requestedNetwork_name, 1);
+
+				$requestedNetwork = 'Soc'. $requestedNetwork_name;
 
 				// set directory for networks
 				$file = __DIR__ .'/Networks/'. $requestedNetwork .'.php';
@@ -66,17 +57,16 @@
 
 				// if file exists create and return an object instance
 				// for requested network
-				try{
-					if (file_exists($file)){
-						$requestedNetwork_class = 'Social\\Networks\\'. $requestedNetwork;
+				if (file_exists($file)){
+					$requestedNetwork_class = 'Social\\Networks\\'. $requestedNetwork;
 
-						return new $requestedNetwork_class();
-					}else{
-						throw new SocialException('Invalid Social network requested');
-					} 
-				}catch(SocialException $ex){
-					echo $ex->getMessage();
-				}
+					// get required configurations
+					$config = SocialConfig::getConfig($requestedNetwork_name);
+
+					return new $requestedNetwork_class($config);
+				}else{
+					throw new SocialException('Invalid Social network requested');
+				} 
 			}
 		}
 	}

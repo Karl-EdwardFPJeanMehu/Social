@@ -37,10 +37,6 @@
 	private static $_loginHelper;
 	public static $graph_api_ver = 2.0;
 
-	// credentials
-	private static $_appId     = '[YOUR APP ID HERE]' ;
-	private static $_appSecret = '[YOUR APP SECRETE HERE]' ;
-
 	/**
 	 * constructor
 	 *
@@ -49,16 +45,17 @@
 	 * @author Karl-Edward F P Jean-Mehu <karlej99@yahoo.com> 
 	 * @throws SocialNetworkException
 	 */
-	public function __construct()
+	public function __construct(array $config)
 	{
-		// make sure there is a session
 		try{
+			// make sure there is a session
 			if (session_status() == PHP_SESSION_NONE) throw new \Social\SocialNetworkException('Facebook requires sessions! Please be more... "Social"!');
 		}catch(\Social\SocialNetworkException $ex){
 			echo $ex->getMessage();
 		}
 
-		FacebookSession::setDefaultApplication(self::$_appId, self::$_appSecret);
+		// set appid and appsecret of Facebook app
+		FacebookSession::setDefaultApplication($config['app_id'], $config['app_secret']);
 	}
 
 	/**
