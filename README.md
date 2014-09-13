@@ -14,8 +14,9 @@ For now, only Facebook is being supported. Serveral API's will be supported in t
 
 #Installation:
 
-	 Make sure PHP 5.4.0 is installed
-	 install Composer globally and use the "composer install" command
+	 -Make sure PHP 5.4.0 is installed
+	 -Download Composer <https://getcomposer.org/> and make a global installation.
+	 -In your terminal / command prompt run the "composer install" command inside your local copy of social
 
 #Use:
 
@@ -35,10 +36,12 @@ Note: A SocialException is thron Upon failure or if the network requested is inv
 
 5) 	Use the "request" method to send your API calls. A strict minimum of pre-written API calls or requests will ever be created per API. Only isSignedIn, getLoginURL and getLogoutURl methods are available for Facebook and the same as Facebook's.
 
-		// Yay, You got a Graph API so quickly!
-		$facebook->request('/me');
+		// Yay, You got a Graph object so quickly!
+		$go = $facebook->request('/me');
 
 #Simple examples:
+
+**Creating an instance of an available network**
 
 	...
 
@@ -53,45 +56,41 @@ Note: A SocialException is thron Upon failure or if the network requested is inv
 		$facebook = $social->network('facebook');
 	}catch(SocialException $ex){
 		// ...
-	}
 
-	//---------
+**Show sign-in link if user is not signed-in**
 
-	// Show sign-in link if user is not signed-in
 	// callback url must respect same Facebook app settings
 	if (!$facebook->isSignedIn("http://yourcallbackurl.com/"))
 	{
 		echo "Login Facebook <a href='{$facebook->getLoginURL()}' title='Login Facebook'>here</a>.";
 	}else{
+		// already signed-in
 		$me = $facebook->request("/me");
 		
-		//...
-	} 
+		//... 
 
-    //-------
+**Creating a request (Facebook vs Social)**
 
-    // Here is how request matches up with the 
-    // example shown by Facebook at 
-    // https://developers.facebook.com/docs/php/howto/postwithgraphapi/4.0.0
+Facebook: example as shown at <https://developers.facebook.com/docs/php/howto/postwithgraphapi/4.0.0>
 
-  	try {
+	try {
+		$response = (new FacebookRequest(
+			$session, 'POST', '/me/feed', array(
+		    'link' => 'www.example.com',
+		    'message' => 'User provided message'
+	)
+	))->execute()->getGraphObject();
 
-    $response = (new FacebookRequest(
-      $session, 'POST', '/me/feed', array(
-        'link' => 'www.example.com',
-        'message' => 'User provided message'
-    )
-    ))->execute()->getGraphObject();
+Social:
 
-	// Social's version
 	$post = array();
     $post['link'] => 'www.example.com';
     $post['message'] => 'User provided message';
     
-	$facebook->request("/me/feed", $post);
+	$response = $facebook->request("/me/feed", $post);
 
 	// or 
 
-	$facebook->request("/me/feed", array('link' => 'www.example.com', 'message' => 'User provided message'));
+	$response = $facebook->request("/me/feed", array('link' => 'www.example.com', 'message' => 'User provided message'));
 
 That's a whole lot simpler Wasn't? Not much strain on the eyes too!
