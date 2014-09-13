@@ -9,7 +9,6 @@
             "email": "karlej99@yahoo.com"
         }
     ],
-    "keywords":["social"],
     "require": {
         "PHP": ">=5.4.0",
         "facebook/php-sdk-v4":"@stable"

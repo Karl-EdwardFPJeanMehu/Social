@@ -14,6 +14,7 @@ For now, only Facebook is being supported. Serveral API's will be supported in t
 
 #Installation:
 
+	 Make sure PHP 5.4.0 is installed
 	 install Composer globally and use the "composer install" command
 
 #Use:
