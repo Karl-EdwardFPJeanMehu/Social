@@ -1,6 +1,7 @@
 {
     "name": "Karl-EdwardJean-Mehu/Social",
     "description": "Facilitate the use of multiple social API's with one simple to use wrapper",
+    "keywords":["facebook", "API", "Social", "PHP"],
     "license":"MIT",
       "authors": [
         {
@@ -10,6 +11,7 @@
     ],
     "keywords":["social"],
     "require": {
+        "PHP": ">=5.4.0",
         "facebook/php-sdk-v4":"@stable"
     },
     "require-dev":{},  
