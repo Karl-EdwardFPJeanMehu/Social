@@ -33,6 +33,7 @@
 	use Facebook\FacebookRedirectLoginHelper;
 
 	class SocFacebook implements \Social\iSocialNetwork{
+	private static $_config;
 	private static $_session;
 	private static $_loginHelper;
 	public static $graph_api_ver = 2.0;
@@ -47,6 +48,8 @@
 	 */
 	public function __construct(array $config)
 	{
+		self::$_config = $config;
+
 		try{
 			// make sure there is a session
 			if (session_status() == PHP_SESSION_NONE) throw new \Social\SocialNetworkException('Facebook requires sessions! Please be more... "Social"!');
@@ -55,7 +58,7 @@
 		}
 
 		// set appid and appsecret of Facebook app
-		FacebookSession::setDefaultApplication($config['app_id'], $config['app_secret']);
+		FacebookSession::setDefaultApplication(self::$_config['app_id'], self::$_config['app_secret']);
 	}
 
 	/**
@@ -67,9 +70,9 @@
 	 * @throws FacebookRequestException 
 	 * @throws SocialNetworkException
 	 */
-	public function isSignedIn($redirectURL)
+	public function isSignedIn()
 	{
-		self::$_loginHelper = new FacebookRedirectLoginHelper($redirectURL);
+		self::$_loginHelper = new FacebookRedirectLoginHelper(self::$_config['redirectURL']);
 		
 		$return = false;
 
