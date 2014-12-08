@@ -37,37 +37,41 @@
 		 * class network
 		 *
 		 * creates instance of requested network API 
-		 * @param  string $requestedNetwork name of supported network
+		 * @param  string $req_networkName name of supported network
 		 * @return object 					instance of requested network
-		 * @throws SocialException If request network is unavailable or invalid
+		 * @throws SocialException If requested network invalid
 		 */
-		public function network($requestedNetwork_name){
+		public function network($req_networkName){
 
-			if(is_string($requestedNetwork_name)){
+				// throw exception if param not string
+				if (! is_string($req_networkName)){
+					throw new SocialException("Invalid network requested.");
+				}
 
 				// prepend required prefix and capitalize
 				// class name
-				$requestedNetwork_name = strtoupper(substr($requestedNetwork_name, 0, 1)) . substr($requestedNetwork_name, 1);
+				$req_networkName = ucfirst($req_networkName);
 
-				$requestedNetwork = 'Soc'. $requestedNetwork_name;
+				$requestedNetwork = 'Soc'. $req_networkName;
 
 				// set directory for networks
-				$file = __DIR__ .'/Networks/'. $requestedNetwork .'.php';
+				$file = __DIR__ .'/Networks/Soc'. $req_networkName .'.php';
 				$file = str_replace('\\', DIRECTORY_SEPARATOR, $file);
 
-				// if file exists create and return an object instance
-				// for requested network
-				if (file_exists($file)){
-					$requestedNetwork_class = 'Social\\Networks\\'. $requestedNetwork;
-
-					// get required configurations
-					$config = SocialConfig::getConfig($requestedNetwork_name);
-
-					return new $requestedNetwork_class($config);
-				}else{
-					throw new SocialException('Invalid Social network requested');
+				// throw exception if file not exists 
+				if (! file_exists($file))
+				{
+					throw new SocialException('Unsupported network requested.');
 				} 
-			}
+
+				// create iSocialNetwork object instance
+				$req_networkClass = 'Social\\Networks\\Soc'. $req_networkName;
+
+				// get required configurations
+				$config = SocialConfig::getConfig($req_networkName);
+
+				// return instance
+				return new $req_networkClass($config);
 		}
 	}
 	
