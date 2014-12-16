@@ -44,7 +44,7 @@
 		public function network($req_networkName){
 
 				// throw exception if param not string
-				if (! is_string($req_networkName)){
+				if (! is_string($req_networkName) || empty($req_networkName)){
 					throw new SocialException("Invalid network requested.");
 				}
 
