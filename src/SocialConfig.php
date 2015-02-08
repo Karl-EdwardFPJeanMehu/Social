@@ -34,17 +34,12 @@
 		{
 			$conf = parse_ini_file('Networks\\config.ini', 1);
 
-			try{
-				if(!isset($conf[$section]))
-				{
-					throw new \Social\SocialConfigException("Requested configuration incorrect or missing.");
-				}
+			if(!isset($conf[$section]) || is_numeric($section))
+			{
+				throw new SocialConfigException("Requested configuration incorrect or missing.");
+			}
 
-				return $conf[$section];
-
-				}catch(\Social\SocialConfigException $ex){
-					echo $ex->getMessage();
-				}
+			return $conf[$section];
 		}
-}
+	}
 ?>
