@@ -50,12 +50,16 @@
 	{
 		self::$_config = $config;
 
-		try{
-			// make sure there is a session
-			if (session_status() == PHP_SESSION_NONE) throw new \Social\SocialNetworkException('Facebook requires sessions! Please be more... "Social"!');
-		}catch(\Social\SocialNetworkException $ex){
-			echo $ex->getMessage();
-		}
+		// throw exception if session not exist
+		if (session_status() == PHP_SESSION_NONE) throw new \Social\SocialNetworkException('Facebook requires sessions! Please be more... "Social"!');
+
+		// check for valid app id
+		if(!isset(self::$_config['app_id']) or !is_string(self::$_config['app_id']))
+			throw new \Social\SocialNetworkException('Missing or invalid app id for Facebook config');
+
+		// check for valid app secret
+		if(!isset(self::$_config['app_secret']) or !is_string(self::$_config['app_secret']))
+			throw new \Social\SocialNetworkException('Missing or invalid app secret for Facebook config');		
 
 		// set appid and appsecret of Facebook app
 		FacebookSession::setDefaultApplication(self::$_config['app_id'], self::$_config['app_secret']);
@@ -67,22 +71,23 @@
 	 * 
 	 * @param  string  $redirectURL URL user must be redirected to
 	 * @return boolean			 	returns true if signed in else
-	 * @throws FacebookRequestException 
 	 * @throws SocialNetworkException
 	 */
-	public function isSignedIn()
+	public function isSignedIn($redirectURL = null)
 	{
-		self::$_loginHelper = new FacebookRedirectLoginHelper(self::$_config['redirectURL']);
+		$redirectURL = (isset($redirectURL))? $redirectURL : self::$_config['redirectURL'];
+		self::$_loginHelper = new FacebookRedirectLoginHelper($redirectURL);
 		
 		$return = false;
 
 		try {
 		  self::$_session = self::$_loginHelper->getSessionFromRedirect();
 		} catch(FacebookRequestException $ex) {
-			$ex->getMessage();
-		} catch(\Social\SocialNetworkException $ex) {
-			$ex->getMessage();
+			throw new \Social\SocialNetworkException($ex->getMessage());
+		} catch(FacebookSDKException $ex){
+			throw new \Social\SocialNetworkException($ex->getMessage());
 		}
+
 		if (self::$_session) {
 		  $return = true;
 		}
@@ -104,7 +109,7 @@
 	 * @param  string $request Facebook Graph node request
 	 * @param  array $post_ar (optional) node/endpoint 
 	 * @return GraphObject          
-	 * @throws FacebookRequestException 
+	 * @throws SocialNetworkException
 	 */
 	public function request($request, array $post_ar = null)
 	{		
@@ -118,8 +123,7 @@
 
 			return (is_array($graphObj))? $graphObj[0] : $graphObj;
 		} catch (FacebookRequestException  $e) {
-			// temp
-			echo "Exception code: ". $e->getCode() ." message: ". $e->getMessage();
+			throw new \Social\SocialNetworkException("Facebook Exception code: ". $e->getCode() ." message: ". $e->getMessage());
 		}
 	}
 

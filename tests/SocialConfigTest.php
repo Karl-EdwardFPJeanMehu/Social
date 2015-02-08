@@ -28,17 +28,6 @@
 		{
 			return array(array(58), array(5050));
 		}
-
-		/**
-		 * @expectedException Social\SocialConfigException
-		 * @dataProvider badConfigsArrayProvider
-		 */
-		public function testConfigThrowsSocialConfigException($configIndex)
-		{
-			$config = $this->config->getConfig($configIndex);
-		}
-
-		
 	}
 
 ?>
