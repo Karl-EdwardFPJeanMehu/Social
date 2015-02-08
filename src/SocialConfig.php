@@ -34,6 +34,11 @@
 		{
 			$conf = parse_ini_file('Networks\\config.ini', 1);
 
+			// remove spaces
+			array_walk_recursive($conf, function($key, $val){
+				$conf[$key] = trim($val);
+			});
+
 			if(!isset($conf[$section]) || is_numeric($section))
 			{
 				throw new SocialConfigException("Requested configuration incorrect or missing.");
