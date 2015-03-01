@@ -54,14 +54,14 @@
 		if (session_status() == PHP_SESSION_NONE) throw new \Social\SocialNetworkException('Facebook requires sessions! Please be more... "Social"!');
 
 		// check for valid app id
-		if(!isset(self::$_config['app_id']) or !is_string(self::$_config['app_id']))
+		if(!isset(self::$_config['app_id']) or !is_string(self::$_config['app_id']) or empty(self::$_config['app_id']))
 			throw new \Social\SocialNetworkException('Missing or invalid app id for Facebook config');
 
 		// check for valid app secret
-		if(!isset(self::$_config['app_secret']) or !is_string(self::$_config['app_secret']))
+		if(!isset(self::$_config['app_secret']) or !is_string(self::$_config['app_secret']) or empty(self::$_config['app_secret']))
 			throw new \Social\SocialNetworkException('Missing or invalid app secret for Facebook config');		
 
-		// set appid and appsecret of Facebook app
+		// set appid and app secret of Facebook app
 		FacebookSession::setDefaultApplication(self::$_config['app_id'], self::$_config['app_secret']);
 	}
 
