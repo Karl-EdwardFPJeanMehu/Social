@@ -32,7 +32,7 @@
 
 		public static function getConfig($section)
 		{
-			$conf = parse_ini_file('Networks\\config.ini', 1);
+			$conf = parse_ini_file('Networks/config.ini', 1);
 
 			// remove spaces
 			array_walk_recursive($conf, function($key, $val){
