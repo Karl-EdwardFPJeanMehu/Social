@@ -61,7 +61,7 @@
 				// throw exception if file not exists 
 				if (! file_exists($file))
 				{
-					throw new SocialException('Unsupported network requested.');
+					throw new SocialNetworkException('Unsupported network requested.');
 				} 
 
 				// create iSocialNetwork object instance
