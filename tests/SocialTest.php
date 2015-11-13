@@ -16,7 +16,11 @@
 			$this->social = Social\Social::init();
 		}
 
-		public function inputNetworks()
+		/**
+		 * sample invalid network names
+		 * @return array
+		 */
+		public function inputInvalidNetworks()
 		{
 			return [
 				['tumblr','facebrooks','twit', [], " "]
@@ -24,8 +28,10 @@
 		}
 
 		/**
+		 * ensures invalid networks throws SocialException
+		 * 
 		 * @expectedException Social\SocialException
-		 * @dataProvider inputNetworks 
+		 * @dataProvider inputInvalidNetworks 
 		 */
 		public function testNetworkThrowsSocialException($network)
 		{
@@ -33,7 +39,7 @@
 		}
 
 		/**
-		 * @expectedException Social\SocialConfigException
+		 * Ensure valid object is returned for valid networks
 		 */
 		public function testNetworkInstanceofiSocialNetwork()
 		{
