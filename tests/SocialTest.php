@@ -1,8 +1,11 @@
 <?php 
 
-	session_start();
+	// sessions required for Facebook
+	if(session_status() == PHP_SESSION_NONE){
+		session_start();
+	}
 
-	require_once '../vendor/autoload.php';
+	require_once 'vendor/autoload.php';
 
 	/**
 	* 
