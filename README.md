@@ -1,5 +1,8 @@
-## Social
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/oi6KGV9sQWUXH4kqqyRoBL5i/Karl-EdwardFPJeanMehu/Social'>
+  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/oi6KGV9sQWUXH4kqqyRoBL5i/Karl-EdwardFPJeanMehu/Social.svg' />
+</a>
 
+## Social
 
 Consume multiple API's from social networks easily! Essentially,
 Social handles most of the confusing and hard work for you so you can begin your API calls sooner.
@@ -10,7 +13,7 @@ Social handles most of the confusing and hard work for you so you can begin your
 
 > Facebook's SDK v4
 
-For now, only Facebook is being supported. Serveral API's will be supported in the future. Currently uses the Facebook\FacebookRedirectLoginHelper for sessions. 
+For now, only Facebook is being supported. Serveral API's will be supported in the future. Currently uses the Facebook\FacebookRedirectLoginHelper for sessions.
 
 #Installation:
 
@@ -51,7 +54,7 @@ Note: A SocialException is thron Upon failure or if the network requested is inv
 	use Social\SocialException;
 
 	$social   = Social\Social::init();
-	
+
 	try{
 		$facebook = $social->network('facebook');
 	}catch(SocialException $ex){
@@ -66,8 +69,8 @@ Note: A SocialException is thron Upon failure or if the network requested is inv
 	}else{
 		// already signed-in
 		$me = $facebook->request("/me");
-		
-		//... 
+
+		//...
 
 **Creating a request (Facebook vs Social)**
 
@@ -86,10 +89,10 @@ Social:
 	$post = array();
     $post['link'] => 'www.example.com';
     $post['message'] => 'User provided message';
-    
+
 	$response = $facebook->request("/me/feed", $post);
 
-	// or 
+	// or
 
 	$response = $facebook->request("/me/feed", array('link' => 'www.example.com', 'message' => 'User provided message'));
 
